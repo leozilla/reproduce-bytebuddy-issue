@@ -30,7 +30,7 @@ public abstract class SomeBaseSaga<SAGA_STATE extends SomeBaseState, MESSAGE ext
         }
     }
 
-    public Collection<KeyReader> keyReaders() {
+    public final Collection<KeyReader> keyReaders() {
         return Collections.EMPTY_LIST;
     }
 
