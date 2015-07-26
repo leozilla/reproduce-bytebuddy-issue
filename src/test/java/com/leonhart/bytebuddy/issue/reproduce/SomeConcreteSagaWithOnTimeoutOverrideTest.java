@@ -9,7 +9,7 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.verify;
 
-public class SomeConcreteSagaTest extends SagaTest {
+public class SomeConcreteSagaWithOnTimeoutOverrideTest extends SagaTest {
     private static final String CORRELATION_ID = "AnyCorrelationIdForThisMessage";
 
     private SomeConcreteSaga sut;

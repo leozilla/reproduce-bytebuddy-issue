@@ -1,4 +1,4 @@
-package com.leonhart.bytebuddy.issue.reproduce;
+package com.leonhart.bytebuddy.issue.reproduce.sagaframework;
 
 import com.codebullets.sagalib.AbstractSagaState;
 import com.leonhart.bytebuddy.issue.reproduce.messages.Message;
@@ -9,10 +9,6 @@ public class SomeBaseState extends AbstractSagaState<Serializable> {
 
     public Message getInitialMessage() {
         return initialMessage;
-    }
-
-    public void setInitialMessage(final Message initialMessage) {
-        this.initialMessage = initialMessage;
     }
 
     public void addMessage(final Message message) {

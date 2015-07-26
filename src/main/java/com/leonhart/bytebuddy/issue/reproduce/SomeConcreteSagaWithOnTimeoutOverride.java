@@ -2,6 +2,7 @@ package com.leonhart.bytebuddy.issue.reproduce;
 
 import com.codebullets.sagalib.EventHandler;
 import com.codebullets.sagalib.StartsSaga;
+import com.codebullets.sagalib.timeout.TimeoutId;
 import com.leonhart.bytebuddy.issue.reproduce.messages.AcknowledgeRequestThatStartsSaga;
 import com.leonhart.bytebuddy.issue.reproduce.messages.SomeMessageThatContinuesSaga;
 import com.leonhart.bytebuddy.issue.reproduce.messages.SomeRequestThatStartsSaga;
@@ -9,7 +10,7 @@ import com.leonhart.bytebuddy.issue.reproduce.messages.SomeResponseForSaga;
 import com.leonhart.bytebuddy.issue.reproduce.sagaframework.SomeBaseSaga;
 import com.leonhart.bytebuddy.issue.reproduce.sagaframework.SomeBaseState;
 
-public class SomeConcreteSaga extends SomeBaseSaga<SomeBaseState, SomeRequestThatStartsSaga> {
+public class SomeConcreteSagaWithOnTimeoutOverride extends SomeBaseSaga<SomeBaseState, SomeRequestThatStartsSaga> {
 
     @StartsSaga
     public void handle(final SomeRequestThatStartsSaga message) {
@@ -21,5 +22,7 @@ public class SomeConcreteSaga extends SomeBaseSaga<SomeBaseState, SomeRequestTha
         respondWith(new SomeResponseForSaga());
     }
 
-    // no onTimeout override
+    @Override
+    public void onTimeout(final TimeoutId id, final String name, final Object data) {
+    }
 }

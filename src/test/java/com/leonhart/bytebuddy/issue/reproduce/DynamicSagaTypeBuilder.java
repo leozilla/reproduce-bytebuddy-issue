@@ -61,7 +61,7 @@ class DynamicSagaTypeBuilder {
      * Defines a default constructor if the saga class does not already define one.
      * If a new constructor is defined this one will call its super constructor with all null arguments.
      * This of course means that no fields will be correctly initialized which is no problem because we do not directly interact with the generated type
-     * instead we will normally only use it for delegating to the real sut instance.
+     * instead we will only use it for delegating to the real sut instance.
      */
     private static DynamicType.Builder<? extends Saga> defineConstructorIfNecessary(
             final Class<? extends Saga> sagaClass,

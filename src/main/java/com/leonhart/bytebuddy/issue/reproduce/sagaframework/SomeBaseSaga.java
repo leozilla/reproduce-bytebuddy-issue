@@ -1,4 +1,4 @@
-package com.leonhart.bytebuddy.issue.reproduce;
+package com.leonhart.bytebuddy.issue.reproduce.sagaframework;
 
 import com.codebullets.sagalib.AbstractSaga;
 import com.codebullets.sagalib.EventHandler;
@@ -7,6 +7,7 @@ import com.codebullets.sagalib.KeyReader;
 import com.codebullets.sagalib.timeout.Timeout;
 import com.codebullets.sagalib.timeout.TimeoutId;
 import com.google.common.reflect.TypeToken;
+import com.leonhart.bytebuddy.issue.reproduce.Messenger;
 import com.leonhart.bytebuddy.issue.reproduce.messages.Message;
 import com.leonhart.bytebuddy.issue.reproduce.messages.SomeRequestThatStartsSaga;
 import java.lang.reflect.TypeVariable;
