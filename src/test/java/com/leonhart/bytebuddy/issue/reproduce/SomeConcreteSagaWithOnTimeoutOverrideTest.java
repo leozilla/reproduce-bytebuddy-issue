@@ -12,13 +12,13 @@ import static org.mockito.Mockito.verify;
 public class SomeConcreteSagaWithOnTimeoutOverrideTest extends SagaTest {
     private static final String CORRELATION_ID = "AnyCorrelationIdForThisMessage";
 
-    private SomeConcreteSaga sut;
+    private SomeConcreteSagaWithOnTimeoutOverride sut;
 
     @Before
     public void before() {
         setUpCorrelationIdForContext(CORRELATION_ID);
 
-        sut = intercept(injectDependencies(new SomeConcreteSaga()));
+        sut = intercept(injectDependencies(new SomeConcreteSagaWithOnTimeoutOverride()));
     }
 
     @Test
