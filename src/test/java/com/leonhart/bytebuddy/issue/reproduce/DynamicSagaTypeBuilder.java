@@ -6,56 +6,16 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 import java.util.stream.Stream;
-import net.bytebuddy.ByteBuddy;
 import net.bytebuddy.description.modifier.Visibility;
 import net.bytebuddy.dynamic.DynamicType;
-import net.bytebuddy.dynamic.loading.ClassLoadingStrategy;
-import net.bytebuddy.dynamic.scaffold.subclass.ConstructorStrategy;
 import net.bytebuddy.implementation.MethodCall;
 
 /**
  * A builder that uses byte buddy to dynamically build a sub class of the saga under test class.
  * This can be used to intercept calls and prepare context dependent setup before the actual call to the sut.
  */
-class DynamicSagaTypeBuilder {
-
-    private final Class<? extends Saga> sagaUnderTestClass;
-    private DynamicType.Builder<? extends Saga> dynamicTypeBuilder;
-
-    DynamicSagaTypeBuilder(final Class<? extends Saga> sagaUnderTestClass) {
-        this.sagaUnderTestClass = sagaUnderTestClass;
-
-        dynamicTypeBuilder = new ByteBuddy()
-                .subclass(sagaUnderTestClass, ConstructorStrategy.Default.IMITATE_SUPER_TYPE_PUBLIC);
-    }
-
-    /**
-     * Creates the builder that can build the sub class for the given {@code sagaUnderTestClass}.
-     */
-    static DynamicSagaTypeBuilder generateSubClassFor(final Class<? extends Saga> sagaUnderTestClass) {
-        return new DynamicSagaTypeBuilder(sagaUnderTestClass);
-    }
-
-    /**
-     * Defines a default constructor (if none is present) that calls a super constructor with all {@code null} arguments.
-     */
-    DynamicSagaTypeBuilder withDefaultNullPassingConstructor() {
-        dynamicTypeBuilder = defineConstructorIfNecessary(sagaUnderTestClass, dynamicTypeBuilder);
-        return this;
-    }
-
-    DynamicSagaTypeBuilder and(final Function<DynamicType.Builder<? extends Saga>, DynamicType.Builder<? extends Saga>> fluentBuilder) {
-        dynamicTypeBuilder = fluentBuilder.apply(dynamicTypeBuilder);
-        return this;
-    }
-
-    public Class<? extends Saga> buildAndLoad() {
-        return dynamicTypeBuilder.make()
-                                 .load(sagaUnderTestClass.getClassLoader(), ClassLoadingStrategy.Default.WRAPPER)
-                                 .getLoaded();
-    }
+final class DynamicSagaTypeBuilder {
 
     /**
      * Defines a default constructor if the saga class does not already define one.
@@ -63,7 +23,7 @@ class DynamicSagaTypeBuilder {
      * This of course means that no fields will be correctly initialized which is no problem because we do not directly interact with the generated type
      * instead we will only use it for delegating to the real sut instance.
      */
-    private static DynamicType.Builder<? extends Saga> defineConstructorIfNecessary(
+    static DynamicType.Builder<? extends Saga> defineConstructorIfNecessary(
             final Class<? extends Saga> sagaClass,
             final DynamicType.Builder<? extends Saga> dynamicTypeBuilder) {
         List<Constructor<?>> publicConstructors = Arrays.asList(sagaClass.getConstructors());
