@@ -9,12 +9,13 @@ import com.codebullets.sagalib.timeout.TimeoutId;
 import com.google.common.reflect.TypeToken;
 import com.leonhart.bytebuddy.issue.reproduce.Messenger;
 import com.leonhart.bytebuddy.issue.reproduce.messages.Message;
-import com.leonhart.bytebuddy.issue.reproduce.messages.SomeRequestThatStartsSaga;
 import java.lang.reflect.TypeVariable;
 import java.util.Collection;
 import java.util.Collections;
 
-public abstract class SomeBaseSaga<SAGA_STATE extends SomeBaseState, MESSAGE extends SomeRequestThatStartsSaga> extends AbstractSaga<SAGA_STATE> {
+public abstract class SomeBaseSaga<SAGA_STATE extends SomeBaseState, MESSAGE extends Message>
+        extends AbstractSaga<SAGA_STATE> {
+
     private static final TypeVariable<Class<SomeBaseSaga>> STATE_TYPE_PARAMETER = SomeBaseSaga.class.getTypeParameters()[0];
 
     private String correlationId;
