@@ -32,4 +32,15 @@ public class SomeConcreteSagaTest extends SagaTest {
         // THEN
         verify(getMessenger()).respondToRequest(eq(startingMessage), isA(AcknowledgeRequestThatStartsSaga.class), eq(CORRELATION_ID));
     }
+
+    @Test
+    public void onTimeout_shallInterceptHandleMethodToSetupContext_andThenForwardToRealInstance() {
+        // GIVEN
+
+        // WHEN
+        sut.onTimeout(null, "", null);
+
+        // THEN
+
+    }
 }
