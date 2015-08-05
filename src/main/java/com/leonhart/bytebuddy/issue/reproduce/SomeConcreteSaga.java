@@ -8,8 +8,13 @@ import com.leonhart.bytebuddy.issue.reproduce.messages.SomeRequestThatStartsSaga
 import com.leonhart.bytebuddy.issue.reproduce.messages.SomeResponseForSaga;
 import com.leonhart.bytebuddy.issue.reproduce.sagaframework.SomeBaseSaga;
 import com.leonhart.bytebuddy.issue.reproduce.sagaframework.SomeBaseState;
+import javax.inject.Inject;
 
 public class SomeConcreteSaga extends SomeBaseSaga<SomeBaseState, SomeRequestThatStartsSaga> {
+
+    @Inject
+    public SomeConcreteSaga(final Object dummy) {
+    }
 
     @StartsSaga
     public void handle(final SomeRequestThatStartsSaga message) {

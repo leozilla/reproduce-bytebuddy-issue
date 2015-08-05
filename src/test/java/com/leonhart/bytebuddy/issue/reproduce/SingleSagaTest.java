@@ -2,20 +2,18 @@ package com.leonhart.bytebuddy.issue.reproduce;
 
 import com.codebullets.sagalib.Saga;
 import com.leonhart.bytebuddy.issue.reproduce.messages.Message;
-import com.leonhart.bytebuddy.issue.reproduce.sagaframework.SomeBaseSaga;
-import com.leonhart.bytebuddy.issue.reproduce.sagaframework.SomeBaseState;
+import com.leonhart.bytebuddy.issue.reproduce.sagaframework.SomeSingleBaseSaga;
 
 import static org.mockito.Mockito.mock;
 
-public class SagaTest extends BaseSagaTest {
+public class SingleSagaTest extends BaseSagaTest {
     private Messenger messenger;
 
     protected void setUp(final Saga sagaUnderTest) {
         super.setup();
-        sagaUnderTest.createNewState();
     }
 
-    protected <SAGA extends SomeBaseSaga> SAGA injectDependencies(final SAGA sagaUnderTest) {
+    protected <SAGA extends SomeSingleBaseSaga> SAGA injectDependencies(final SAGA sagaUnderTest) {
         setUp(sagaUnderTest);
         messenger = mock(Messenger.class);
 
@@ -23,13 +21,12 @@ public class SagaTest extends BaseSagaTest {
         return sagaUnderTest;
     }
 
-    protected <SAGA extends SomeBaseSaga> SAGA intercept(final SAGA sagaUnderTest) {
+    protected <SAGA extends SomeSingleBaseSaga> SAGA intercept(final SAGA sagaUnderTest) {
         Class<? extends Saga> dynamicSpaceSagaSubClass = generateProxyClassForSagaUnderTest(sagaUnderTest, this::setupContext);
         return newInstanceUnchecked(dynamicSpaceSagaSubClass);
     }
 
-    protected <SAGA extends SomeBaseSaga> void setupContext(final SAGA saga, final Message msg) {
-        ((SomeBaseState) saga.state()).addMessage(msg);
+    protected <SAGA extends SomeSingleBaseSaga> void setupContext(final SAGA saga, final Message msg) {
         superCall(msg);
         saga.setExecutionContext(getExecutionContext());
     }

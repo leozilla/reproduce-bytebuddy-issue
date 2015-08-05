@@ -10,14 +10,13 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Matchers.isA;
 import static org.mockito.Mockito.verify;
 
-public class SomeConcreteSagaTest extends SagaTest {
+public class SomeSingleHandlerTest extends SingleSagaTest {
 
-    private SomeConcreteSaga sut;
+    private SomeSingleHandler sut;
 
     @Before
     public void before() {
-        sut = intercept(injectDependencies(new SomeConcreteSaga("dummy")));
-        setUp(sut);
+        sut = intercept(injectDependencies(new SomeSingleHandler()));
     }
 
     @Test
@@ -30,16 +29,5 @@ public class SomeConcreteSagaTest extends SagaTest {
 
         // THEN
         verify(getMessenger()).respondToRequest(eq(startingMessage), isA(AcknowledgeRequestThatStartsSaga.class), any());
-    }
-
-    @Test
-    public void onTimeout_shallInterceptHandleMethodToSetupContext_andThenForwardToRealInstance() {
-        // GIVEN
-
-        // WHEN
-        sut.onTimeout(null, "", null);
-
-        // THEN
-
     }
 }
